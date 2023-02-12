@@ -20,26 +20,25 @@ public class HellobootApplication {
     public static void main(String[] args) {
         GenericApplicationContext applicationContext = new GenericApplicationContext();
 		applicationContext.registerBean(HelloController.class);
+		applicationContext.registerBean(SimpleHelloService.class);
 		applicationContext.refresh();
 
         ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
-        WebServer webServer = serverFactory.getWebServer(servletContext -> {
-            servletContext.addServlet("front-controller", new HttpServlet() {
-                @Override
-                protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                    if (req.getRequestURI().equals("/hello") && req.getMethod().equals(HttpMethod.GET.name())) {
-                        String name = req.getParameter("name");
-						HelloController helloController = applicationContext.getBean(HelloController.class);
-						String ret = helloController.hello(name);
+        WebServer webServer = serverFactory.getWebServer(servletContext -> servletContext.addServlet("front-controller", new HttpServlet() {
+            @Override
+            protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+                if (req.getRequestURI().equals("/hello") && req.getMethod().equals(HttpMethod.GET.name())) {
+                    String name = req.getParameter("name");
+                    HelloController helloController = applicationContext.getBean(HelloController.class);
+                    String ret = helloController.hello(name);
 
-                        resp.setContentType(MediaType.TEXT_PLAIN_VALUE);
-                        resp.getWriter().println(ret);
-                    } else {
-                        resp.setStatus(HttpStatus.NOT_FOUND.value());
-                    }
+                    resp.setContentType(MediaType.TEXT_PLAIN_VALUE);
+                    resp.getWriter().println(ret);
+                } else {
+                    resp.setStatus(HttpStatus.NOT_FOUND.value());
                 }
-            }).addMapping("/*");
-        });
+            }
+        }).addMapping("/*"));
         webServer.start();
     }
 }
