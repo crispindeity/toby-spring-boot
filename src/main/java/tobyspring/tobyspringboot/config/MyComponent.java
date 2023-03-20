@@ -1,4 +1,4 @@
-package tobyspring.tobyspringboot;
+package tobyspring.tobyspringboot.config;
 
 import org.springframework.stereotype.Component;
 
