@@ -3,8 +3,26 @@ package tobyspring.tobyspringboot;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@UnitTest
+@interface FastUnitTest {
+
+}
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD, ElementType.ANNOTATION_TYPE })
+@Test
+@interface UnitTest {
+
+}
 class SimpleHelloServiceTest {
-    @Test
+    @FastUnitTest
     void simpleHelloService() {
         SimpleHelloService helloService = new SimpleHelloService();
 
@@ -13,7 +31,7 @@ class SimpleHelloServiceTest {
         assertThat(result).isEqualTo("Hello Test");
     }
 
-    @Test
+    @FastUnitTest
     void helloDecorator() {
         HelloDecorator decorator = new HelloDecorator(name -> name);
 
