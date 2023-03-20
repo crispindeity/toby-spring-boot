@@ -4,6 +4,9 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 
+import tobyspring.tobyspringboot.config.MyAutoConfiguration;
+
+@MyAutoConfiguration
 public class TomcatWebServerConfig {
     @Bean
     public ServletWebServerFactory servletWebServerFactory() {
