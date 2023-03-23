@@ -1,2 +1,3 @@
 tobyspring.tobyspringboot.config.autoconfig.DispatcherServletConfig
 tobyspring.tobyspringboot.config.autoconfig.TomcatWebServerConfig
+tobyspring.tobyspringboot.config.autoconfig.JettyWebServerConfig
